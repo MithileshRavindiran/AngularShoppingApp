@@ -10,7 +10,7 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="shopping-cart">Shopping Cart</a>
             </li>
-            <li class="nav-item dropdown" ngbDropdown *ngIf="authService.appUser$ | async as user; else anonymousUser">
+            <li class="nav-item dropdown" ngbDropdown *ngIf="appUser; else anonymousUser">
                 <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>{{user.displayName}}</a>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                     <a class="dropdown-item" routerLink="/my/orders">My Orders</a>
