@@ -17,8 +17,6 @@ export class AdminAuthGuard implements CanActivate {
         return this.userService.get(user.uid).valueChanges();
       }),
       map (x =>  {
-        console.log(x);
-        console.log(x.isAdmin);
         return x.isAdmin;
       })
     );
