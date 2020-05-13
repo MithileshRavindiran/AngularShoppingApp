@@ -20,7 +20,7 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { LoginComponent } from './login/login.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { FormsModule } from '@angular/forms';
-
+import { CustomFormsModule } from 'ngx-custom-validators';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +43,8 @@ import { FormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    FormsModule
+    FormsModule,
+    CustomFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
