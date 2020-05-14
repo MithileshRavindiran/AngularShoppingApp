@@ -23,7 +23,6 @@ export class ProductService {
     );
   }
   documentToDomainObject = _ => {
-    console.log(_);
     let object :Product = _.payload.val();
     object.id = _.payload.key;
     return object;
@@ -42,7 +41,6 @@ export class ProductService {
   }
 
   deleteProduct(productId) {
-    console.log('Inside Delte' + productId);
     return this.db.object('/products/' + productId).remove();
       
     
