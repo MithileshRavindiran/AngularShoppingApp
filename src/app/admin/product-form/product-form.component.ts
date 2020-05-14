@@ -13,7 +13,14 @@ import { Product } from 'src/app/models/product';
 export class ProductFormComponent implements OnInit {
 
   categories$;
-  product= {};
+  product:  Product = {
+    id: '',
+    title: '',
+    imageUrl: '',
+    category: '',
+    price:0
+
+  };
   id;
 
   constructor(
@@ -22,12 +29,12 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService,
     private acitvatedRoute: ActivatedRoute) {
     this.categories$ = this.categoryService.getCategories().snapshotChanges();
-    this.categoryService.getCategories().valueChanges().subscribe(x => console.log(x));
     this.id = this.acitvatedRoute.snapshot.paramMap.get('id');
     if (this.id) {
-      this.productService.getProductById(this.id).snapshotChanges()
-        .pipe(take(1))
-        .subscribe(p => this.product = p.payload.val());
+      this.productService.getProductById(this.id)
+        .subscribe(p => {
+          this.product = p
+        });
     }
   }
 
@@ -35,7 +42,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   save(product) {
-    console.log("Saving");
     if (this.id) {
       this.productService.updateProduct(this.id, product);
     }

@@ -8,9 +8,15 @@ import { ProductService } from 'src/app/common/service/product.service';
 })
 export class AdminProductsComponent implements OnInit {
   products$;
+  filteredProducts;
   constructor(private productService:ProductService) {
-    this.products$ = productService.getAllProducts().snapshotChanges();
-
+    this.products$ = productService.getAllProducts();
+    productService.getAllProducts().subscribe(x => {
+       this.filteredProducts=x;
+       console.log(x);
+       console.log(this.filteredProducts);
+     });
+    
    }
 
   ngOnInit(): void {
