@@ -18,12 +18,8 @@ const routes: Routes = [
   //general routes
   {
     path:'',
-    redirectTo:'home',
+    redirectTo:'products',
     pathMatch:'full'
-  },
-  {
-    path:'home',
-    component:HomeComponent
   },
   {
     path:'products',
