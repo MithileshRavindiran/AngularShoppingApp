@@ -12,13 +12,19 @@ import { UserService } from './common/service/user.service';
 export class AppComponent {
   title = 'MithiOrganicShop';
 
-  constructor(private userService: UserService, private authService:AuthService, router  : Router) {
-    authService.user$.subscribe(user  => {
-      if (user) {
-        userService.save(user);
-        let returnUrl = localStorage.getItem('returnUrl');
-        router.navigateByUrl(returnUrl);
-      }
+  constructor(private userService: UserService, private authService: AuthService, router: Router) {
+    authService.user$.subscribe(user => {
+
+      if (!user) return
+
+      userService.save(user);
+
+      let returnUrl = localStorage.getItem('returnUrl');
+      if (!returnUrl) return;
+
+      localStorage.removeItem('returnUrl');
+      router.navigateByUrl(returnUrl);
+
     })
   }
 }

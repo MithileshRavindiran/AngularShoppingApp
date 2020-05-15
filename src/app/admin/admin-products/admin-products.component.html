@@ -2,14 +2,48 @@
 <p>
     <a routerLink="/admin/products/new" class="btn btn-primary">New  Product</a>
 </p>
-<p>
+<!-- Normal form Filtering Logic-->
+<!-- <p>
     <input
     #query
     (keyup)="filter(query.value)" 
     type="text" 
     class="form-control">
-</p>
-<table class="table">
+</p> -->
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="products" matSort>
+  
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+        <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+        <td mat-cell *matCellDef="let row"> {{row.price}}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let row"> <a [routerLink]="['/admin/products/', row.id]">Edit</a> </td>
+      </ng-container>
+  
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+
+  <!--Normal Table-->
+<!-- <table class="table">
     <thead>
         <tr>
             <th>Title</th>
@@ -26,4 +60,4 @@
             </td>
         </tr>
     </tbody>
-</table>
+</table> -->

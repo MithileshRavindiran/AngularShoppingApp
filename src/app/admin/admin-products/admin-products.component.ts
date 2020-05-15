@@ -1,7 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/common/service/product.service';
 import { Product } from 'src/app/models/product';
 import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-admin-products',
@@ -9,23 +12,43 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./admin-products.component.css']
 })
 export class AdminProductsComponent implements OnInit,OnDestroy {
-  products: Product[];
-  filteredProducts: Product[];
+  //products: Product[];
+  //filteredProducts: Product[];
   subscription:Subscription;
+  displayedColumns: string[] = ['title', 'price', 'edit'];
+  products: MatTableDataSource<Product>;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   constructor(private productService:ProductService) {
-   this.subscription = productService.getAllProducts().subscribe(x => this.filteredProducts = this.products = x);
+   this.subscription = productService.getAllProducts().subscribe(x => {
+     //this.products = x;
+     this.products = new MatTableDataSource(x);
+     this.products.paginator  = this.paginator;
+     this.products.sort = this.sort;
+     
+    });
    }
   ngOnInit(): void {
   }
 
-  filter(queryValue)  {
-   this.filteredProducts = (queryValue) ? 
-   this.products.filter(product => product.title.toLowerCase().includes(queryValue.toLowerCase())) : 
-   this.products;
-  }
+  //Normal Table Filter Query
+  // filter(queryValue)  {
+  //  this.filteredProducts = (queryValue) ? 
+  //  this.products.filter(product => product.title.toLowerCase().includes(queryValue.toLowerCase())) : 
+  //  this.products;
+  // }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.products.filter = filterValue.trim().toLowerCase();
+
+    if (this.products.paginator) {
+      this.products.paginator.firstPage();
+    }
   }
 
 }
