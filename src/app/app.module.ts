@@ -65,6 +65,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import  {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,8 @@ import { ProductFilterComponent } from './products/product-filter/product-filter
     AdminOrdersComponent,
     LoginComponent,
     ProductFormComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
