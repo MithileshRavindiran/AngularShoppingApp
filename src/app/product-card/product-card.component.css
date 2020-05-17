@@ -5,3 +5,8 @@
 .card {
     margin-bottom: 30px;
 }
+
+.btn-primary {
+    background-color: grey;
+    border-color: grey;
+}
