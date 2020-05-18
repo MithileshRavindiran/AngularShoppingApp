@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { Observable } from 'rxjs';
 import { AuthService } from '../common/service/auth.service';
 import { AppUser } from '../models/app-user';
+import { ShoppingCartService } from '../common/service/shopping-cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,13 +16,17 @@ export class NavbarComponent implements OnInit {
   appUser:AppUser;
   
 
-  constructor(private authService: AuthService) {
-    authService.appUser$.subscribe(appUser =>  {
-      this.appUser = appUser;
-    });
+  constructor(private authService: AuthService, private shoppingCartService: ShoppingCartService) {
+    
+    
    }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.authService.appUser$.subscribe(appUser =>  {
+      this.appUser = appUser;
+    });
+
+    let  cart$  = (await this.shoppingCartService.getCart());
   }
 
   logOut() {

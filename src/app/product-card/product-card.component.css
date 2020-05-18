@@ -10,3 +10,7 @@
     background-color: grey;
     border-color: grey;
 }
+
+.card-footer button {
+    cursor: pointer;
+}
