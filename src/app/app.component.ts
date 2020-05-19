@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'MithiOrganicShop';
 
   constructor(private userService: UserService, private authService: AuthService, router: Router) {
+    console.log('inside app componen');
     authService.user$.subscribe(user => {
 
       if (!user) return
