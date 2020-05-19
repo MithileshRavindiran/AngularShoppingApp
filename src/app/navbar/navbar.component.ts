@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
       this.appUser = appUser;
     });
 
-    let  cart$  = (await this.shoppingCartService.getCart());
+    let  cart$  = (await this.shoppingCartService.getCartOld());
   }
 
   logOut() {

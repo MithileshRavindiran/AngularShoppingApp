@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, SnapshotAction, AngularFireList } from 'angularfire2/database';
 import { Product } from 'src/app/models/product';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
+import { ShoppingCart } from 'src/app/models/shopping-cart';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +21,37 @@ export class ShoppingCartService {
      })
   }
 
+ async getCartOld() {
+  let cartId = await this.getOrCreateCartId();
+  return this.db.list('/shopping-carts/'+cartId)
+  .snapshotChanges()
+  .pipe(
+    map(x => {
+      //console.log(x);
+      return new ShoppingCart(x[1].payload.val() as any);
+    })
+  );
+ }
+
   async getCart() {
     let cartId = await this.getOrCreateCartId();
-    return this.db.list('/shopping-carts/'+cartId);
+    return this.db.list('/shopping-carts/'+cartId)
+    .snapshotChanges()
+    .pipe(
+    );
   }
+  documentToDomainShoppingCart(arg0: SnapshotAction<unknown>) {
+    //console.log(arg0.payload.val());
+  }
+  documentToDomainShoppingCartItem(arg0: SnapshotAction<unknown>) {
+    //console.log(arg0.payload.val());
+  }
+
+   documentToDomainShoppingCartOld = _ => {
+     console.log();
+     let object: ShoppingCart = _.payload.val();
+     return object;
+ }
 
   private getItem(cartId: string, productId: string) {
     return this.db.object('/shopping-carts/'+ cartId + '/items/'  + productId);
