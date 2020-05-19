@@ -31,8 +31,6 @@ export class ProductCardComponent implements OnInit {
   getQuantity() {
     if (!this.shoppingCart) return 0;
 
-     console.log('inside get quantity');
-     console.log(this.shoppingCart);
      let matchedItem : ShoppingCartItem;
       this.shoppingCart.items.forEach(x => {
        if (x.product.id === this.product.id) {
