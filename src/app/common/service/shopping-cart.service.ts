@@ -21,7 +21,7 @@ export class ShoppingCartService {
      })
   }
 
- async getCartOld() {
+ async getCart() {
   let cartId = await this.getOrCreateCartId();
   return this.db.list('/shopping-carts/'+cartId)
   .snapshotChanges()
@@ -33,19 +33,7 @@ export class ShoppingCartService {
   );
  }
 
-  async getCart() {
-    let cartId = await this.getOrCreateCartId();
-    return this.db.list('/shopping-carts/'+cartId)
-    .snapshotChanges()
-    .pipe(
-    );
-  }
-  documentToDomainShoppingCart(arg0: SnapshotAction<unknown>) {
-    //console.log(arg0.payload.val());
-  }
-  documentToDomainShoppingCartItem(arg0: SnapshotAction<unknown>) {
-    //console.log(arg0.payload.val());
-  }
+  
 
    documentToDomainShoppingCartOld = _ => {
      console.log();
