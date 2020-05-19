@@ -21,7 +21,7 @@ export class ShoppingCartService {
      })
   }
 
- async getCart() {
+ async getCart() :Promise<Observable<ShoppingCart>> {
   let cartId = await this.getOrCreateCartId();
   return this.db.list('/shopping-carts/'+cartId)
   .snapshotChanges()
