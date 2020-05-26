@@ -6,6 +6,7 @@ import { Product } from 'src/app/models/product';
 import { take, map } from 'rxjs/operators';
 import { ShoppingCart } from 'src/app/models/shopping-cart';
 import { Observable } from 'rxjs';
+import { ShoppingCartItem } from 'src/app/models/shopping-cart-item';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,22 @@ export class ShoppingCartService {
   constructor(private db: AngularFireDatabase) { }
 
 
-  private create() {
-    return this.db.list('/shopping-carts').push({
-      dateCreated: new Date().getTime()
+  async addOrRemoveToCart(product: Product, add: boolean) {
+    let cartId = await this.getOrCreateCartId();
+    let item$ = this.getItem(cartId, product.id);
+    item$.snapshotChanges().pipe(
+      take(1)
+    ).subscribe(item => {
+      let currentQuantity = ((item.key != null) ? item.payload.val()['quantity'] : 0);
+      let quantityToBeUpdated = ((add) ? (currentQuantity + 1) : (currentQuantity - 1))
+      if (quantityToBeUpdated === 0) {
+        item$.remove();
+      } else {
+        item$.update({
+          product: product,
+          quantity: quantityToBeUpdated
+        });
+      }
     })
   }
 
@@ -34,6 +48,20 @@ export class ShoppingCartService {
           }
         })
       );
+  }
+
+
+  private create() {
+    return this.db.list('/shopping-carts').push({
+      dateCreated: new Date().getTime()
+    })
+  }
+
+
+
+  async clearCart() {
+    let cartId = await this.getOrCreateCartId();
+    this.db.object('/shopping-carts/' + cartId + '/items').remove();
   }
 
 
@@ -59,21 +87,9 @@ export class ShoppingCartService {
     return cartId;
   }
 
-  async addOrRemoveToCart(product: Product, add: boolean) {
-    let cartId = await this.getOrCreateCartId();
-    let item$ = this.getItem(cartId, product.id);
-    item$.snapshotChanges().pipe(
-      take(1)
-    ).subscribe(item => {
-      let quantity = ((item.key != null) ? item.payload.val()['quantity'] : 0);
-      item$.update({
-        product: product,
-        quantity: ((add) ? (quantity + 1) : (quantity - 1))
-      });
-    })
-  }
 
-  
+
+
 
 
 }

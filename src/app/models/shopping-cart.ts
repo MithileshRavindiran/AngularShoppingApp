@@ -10,12 +10,28 @@ export class ShoppingCart {
         this.itemsMap = itemsMap || {};
 
         for (const productId in itemsMap) {
+           
             const item = itemsMap[productId] as any;
+            //flattening the object
+            //let x = new ShoppingCartItem({
+                //title:  item.title,
+                //imageUrl: item.imageUrl,
+                //price: item.price,
+                //or
+                //...item,
+                //$key: productId
+
+            //});
+            // let x =  new ShoppingCartItem();
+            // Object.assign(x, item);
+            //x.$key = productId
+
             this.items.push(new ShoppingCartItem(item.product, item.quantity));
         }
     }
 
     get totalItemsCount(): number {
+        console.log("Inside Total items cout");
         let shoppingCartItemCount = 0;
         this.items.forEach(item => {
             shoppingCartItemCount += item.quantity;
@@ -36,7 +52,6 @@ export class ShoppingCart {
     
          let matchedItem : ShoppingCartItem;
           this.items.forEach(x => {
-           console.log(x.product.id);
            if (x.product.id === product.id) {
              matchedItem = x;
            }

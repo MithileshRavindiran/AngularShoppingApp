@@ -19,11 +19,12 @@ export class NavbarComponent implements OnInit {
   cart$:Observable<ShoppingCart>;
 
   constructor(private authService: AuthService, private shoppingCartService: ShoppingCartService) {
-    
+    console.log('NavBar Constructor');
     
    }
 
   async ngOnInit() {
+    console.log('Inside Nav Bar Ng On It')
     this.authService.appUser$.subscribe(appUser =>  {
       this.appUser = appUser;
     });
