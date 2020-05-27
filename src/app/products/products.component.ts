@@ -4,8 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../models/product';
 import { switchMap } from 'rxjs/operators';
 import { ShoppingCartService } from '../common/service/shopping-cart.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ShoppingCart } from '../models/shopping-cart';
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
+import { ShoppingCartItem } from '../models/shopping-cart-item';
 
 @Component({
   selector: 'app-products',
@@ -18,6 +20,7 @@ export class ProductsComponent implements OnInit,  OnDestroy {
   filteredProducts: Product[] = [];
   filteringCategory;
   cart: ShoppingCart;
+  cart$: Observable<ShoppingCart>;
   subscription:Subscription;
 
   constructor(
@@ -26,15 +29,7 @@ export class ProductsComponent implements OnInit,  OnDestroy {
     private shoppingCartService: ShoppingCartService) {
     
     
-    productsService.getAllProducts().pipe(
-      switchMap(products => {
-        this.products = products;
-        return this.activatedRoute.queryParamMap;
-      })
-    ).subscribe(params => {
-      this.filteringCategory = params.get('category');
-      this.filteredProducts = (this.filteringCategory) ? this.products.filter(p => p.category === this.filteringCategory) : this.products;
-    });
+    
     
     //Old Way to subscribe
     // productsService.getAllProducts().subscribe(p => {
@@ -53,11 +48,31 @@ export class ProductsComponent implements OnInit,  OnDestroy {
   async ngOnInit() {
      this.subscription = (await this.shoppingCartService.getCart()).subscribe((cart) => {
        this.cart = cart;
-      });  
+      }); 
+      this.populateProducts();
+      
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private populateProducts() {
+    let x: ShoppingCart;
+    
+    this.productsService.getAllProducts().pipe(
+      switchMap(products => {
+        this.products = products;
+        return this.activatedRoute.queryParamMap;
+      })
+    ).subscribe(params => {
+      this.filteringCategory = params.get('category');
+      this.applyFilter();
+    });
+  }
+
+  private applyFilter()  {
+    this.filteredProducts = (this.filteringCategory) ? this.products.filter(p => p.category === this.filteringCategory) : this.products;
   }
 
 }
