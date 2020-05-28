@@ -12,4 +12,8 @@ export class CheckOutComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  placeOrder(value) {
+    console.log(value);
+  }
+
 }
