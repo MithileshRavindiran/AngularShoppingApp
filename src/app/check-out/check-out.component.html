@@ -1,36 +1,9 @@
-<div class="row">
-<div  class="col-md-6">
-    <h1>Shipping</h1>
-    <form #f="ngForm" (ngSubmit)="placeOrder()">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input [(ngModel)]="shipping.name" #name="ngModel" id="name" name="name" type="text" class="form-control" placeholder="Name" required>
-            <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
-                <div *ngIf="name.errors.required">Name is required.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label  for="addressLine1">Address</label>
-            <input [(ngModel)]="shipping.line1" #addressLine1="ngModel" id="addressLine1" name="addressLine1" type="text" class="form-control" placeholder="line1" required>
-            <div class="alert alert-danger" *ngIf="addressLine1.touched && addressLine1.invalid">
-                <div *ngIf="addressLine1.errors.required">Address is required.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label  for="addressLine2"></label>
-            <input [(ngModel)]="shipping.line2" #addressLine2="ngModel" id="addressLine2" name="addressLine2" type="text" class="form-control" placeholder="line2" required>
-            <div class="alert alert-danger" *ngIf="addressLine2.touched && addressLine2.invalid">
-                <div *ngIf="addressLine2.errors.required">Address is required.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="city">City</label>
-            <input [(ngModel)]="shipping.city" #city="ngModel" id="city" name="city" type="text" class="form-control" placeholder="city">
-            <div class="alert alert-danger" *ngIf="city.touched && city.invalid">
-                <div *ngIf="city.errors.required">City is required.</div>
-            </div>
-        </div>
-        <button class="btn btn-primary">Place Order</button>
-    </form>
-</div>
+<h1>Shipping</h1>
+<div class="row" *ngIf="cart$ | async as cart">
+    <div class="col-md-6">
+        <app-shopping-form [cart]="cart"></app-shopping-form>
+    </div>
+    <div class="col-md-6">
+        <app-shopping-cart-summary [cart]="cart"></app-shopping-cart-summary>
+    </div>
 </div>
