@@ -36,7 +36,7 @@ const routes: Routes = [
 
 //order routes
   {
-    path:'order-success',
+    path:'order-success/:id',
     component:OrderSuccessComponent,
     canActivate:[AuthGuard]
   },
