@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth.service';
 import { map, switchMap } from 'rxjs/operators';
+import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
 
 @Injectable({

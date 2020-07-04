@@ -3,11 +3,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { Observable } from 'rxjs';
-import { AuthService } from '../common/service/auth.service';
-import { AppUser } from '../models/app-user';
-import { ShoppingCartService } from '../common/service/shopping-cart.service';
+import { AuthService } from 'shared/common/service/auth.service';
+import { AppUser } from 'shared/models/app-user';
+import { ShoppingCartService } from 'shared/common/service/shopping-cart.service';
 import { isNgTemplate } from '@angular/compiler';
-import { ShoppingCart } from '../models/shopping-cart';
+import { ShoppingCart } from 'shared/models/shopping-cart';
 
 @Component({
   selector: 'app-navbar',

@@ -1,5 +1,5 @@
 import { ShoppingCartItem } from './shopping-cart-item';
-import { ShoppingCartService } from '../common/service/shopping-cart.service';
+import { ShoppingCartService } from 'shared/common/service/shopping-cart.service';
 import { Product } from './product';
 
 export class ShoppingCart {

@@ -9,9 +9,9 @@ import { LoginComponent } from './login/login.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
-import { AuthGuard } from './common/service/guard/auth-guard.service';
-import { AdminAuthGuard } from './common/service/guard/admin-auth.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { AuthGuard } from 'shared/common/service/guard/auth-guard.service';
+import { AdminAuthGuard } from 'shared/common/service/guard/admin-auth.service';
 
 
 const routes: Routes = [

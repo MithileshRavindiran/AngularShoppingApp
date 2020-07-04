@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from './common/service/auth.service';
+import { AuthService } from 'shared/common/service/auth.service';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
-import { UserService } from './common/service/user.service';
+import { UserService } from 'shared/common/service/user.service';
 
 @Component({
   selector: 'app-root',

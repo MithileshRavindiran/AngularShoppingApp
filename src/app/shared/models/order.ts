@@ -1,5 +1,4 @@
 import { ShoppingCart } from './shopping-cart';
-import { ShoppingCartItem } from './shopping-cart-item';
 import { Shipping } from './shipping';
 
 export class Order {
